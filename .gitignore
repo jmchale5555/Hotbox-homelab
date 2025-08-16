@@ -1,0 +1,31 @@
+# Kubernetes secrets (use sealed-secrets or external secrets instead)
+**/secrets/
+**/*-secret.yaml
+!**/sealed-secrets/
+
+# Local development
+**/.env
+**/local-values.yaml
+**/debug/
+
+# Backup files
+**/*.backup
+**/backups/
+**/etcd-backup/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+**/*.log
+**/logs/
+
+# Temporary kustomize outputs
+**/generated/

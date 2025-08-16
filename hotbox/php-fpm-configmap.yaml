@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: php-fpm-config
+  namespace: hotdesk
+data:
+  PHP_MEMORY_LIMIT: "512M"
+  PHP_UPLOAD_MAX_FILESIZE: "100M"
+  PHP_POST_MAX_SIZE: "100M"
+  PHP_MAX_EXECUTION_TIME: "300"

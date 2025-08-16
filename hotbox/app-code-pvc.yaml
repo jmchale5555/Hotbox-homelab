@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-code-pvc
+  namespace: hotdesk
+spec:
+  accessModes:
+    - ReadWriteMany  # Multiple pods need to access the same code
+  resources:
+    requests:
+      storage: 5Gi
