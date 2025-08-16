@@ -1,5 +1,6 @@
 apiVersion: app/v1
 kind: StorageClass
+namespace: hotdesk
 metadata:
   name: slow
 provisioner: kubernetes.io/gce-pd
