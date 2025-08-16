@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany  # Multiple pods need to access the same code
-  storageClassName: slow  
+  storageClassName: local-path
   resources:
     requests:
       storage: 5Gi
