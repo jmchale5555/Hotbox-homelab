@@ -4,6 +4,8 @@ metadata:
   name: mariadb-config
   namespace: hotdesk
 data:
+  MYSQL_DATABASE: "hot"
+  MYSQL_USER: "root"
   init-db.sql: |
     -- Create database
     CREATE DATABASE IF NOT EXISTS hot;
