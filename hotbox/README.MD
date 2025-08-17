@@ -1,0 +1,1 @@
+# Hotdesk Booking App manifest
