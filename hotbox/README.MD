@@ -1,1 +1,4 @@
-# Hotdesk Booking App manifest
+# Hotdesk Booking App Manifest
+
+Pending
+
