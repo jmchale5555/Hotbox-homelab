@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: mariadb
-        image: 192.168.1.211:5000/project-mariadb:latest  # Build and push your custom image
+        image: 192.168.1.211:5000/project-mariadb:latest
         ports:
         - containerPort: 3306
         env:
@@ -73,8 +73,8 @@ spec:
             - -c
             - 'mariadb -h localhost -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1"'
           initialDelaySeconds: 5
-          periodSeconds: 2  
-    volumes:
+          periodSeconds: 2
+      volumes:
       - name: mariadb-storage
         persistentVolumeClaim:
           claimName: mariadb-pvc
