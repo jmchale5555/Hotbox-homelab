@@ -27,7 +27,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mariadb-secret
-              key: mysql-root-password
+              key: mariadb-root-password
         - name: MYSQL_DATABASE
           valueFrom:
             configMapKeyRef:
@@ -42,7 +42,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mariadb-secret
-              key: mysql-password
+              key: mariadb-password
         - name: MYSQL_ROOT_HOST
           value: "%"
         volumeMounts:
