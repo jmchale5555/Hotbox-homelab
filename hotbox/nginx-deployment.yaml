@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: localhost:5000/project-nginx:latest  # Build and push your custom image
+        image: 192.168.1.211:5000/project-nginx:latest  # Build and push your custom image
         ports:
         - containerPort: 80
         - containerPort: 443
