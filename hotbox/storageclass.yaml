@@ -5,6 +5,6 @@ metadata:
   name: local-path
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 parameters:
   type: pd-ssd
