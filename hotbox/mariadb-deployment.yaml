@@ -67,13 +67,10 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
-          exec:
-            command:
-            - /bin/bash
-            - -c
-            - 'mariadb -h localhost -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1"'
-          initialDelaySeconds: 5
-          periodSeconds: 2
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 10
+          periodSeconds: 5
       volumes:
       - name: mariadb-storage
         persistentVolumeClaim:
