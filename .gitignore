@@ -29,3 +29,5 @@ Thumbs.db
 
 # Temporary kustomize outputs
 **/generated/
+
+**/mariadb-secret.yaml
