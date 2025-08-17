@@ -1,4 +1,4 @@
 # Hotdesk Booking App Manifest
 
-Pending
+Soon
 
