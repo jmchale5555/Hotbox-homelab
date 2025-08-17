@@ -5,4 +5,4 @@ metadata:
   namespace: hotdesk
 data:
   MYSQL_DATABASE: "hot"
-  MYSQL_USER: "app_user"
+  MYSQL_USER: "root"
