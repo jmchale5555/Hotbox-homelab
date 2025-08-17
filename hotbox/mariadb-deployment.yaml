@@ -69,17 +69,12 @@ spec:
         readinessProbe:
           exec:
             command:
-            - mariadb
-            - -h
-            - localhost
-            - -u
-            - root
-            - -prootpassword
-            - -e
-            - "SELECT 1"
+            - /bin/bash
+            - -c
+            - 'mariadb -h localhost -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1"'
           initialDelaySeconds: 5
-          periodSeconds: 2
-      volumes:
+          periodSeconds: 2  
+    volumes:
       - name: mariadb-storage
         persistentVolumeClaim:
           claimName: mariadb-pvc
