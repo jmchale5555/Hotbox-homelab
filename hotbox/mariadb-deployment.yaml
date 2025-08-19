@@ -74,6 +74,7 @@ spec:
         livenessProbe:
           exec:
             command:
+            - mariadb-admin
             - ping
             - -h
             - localhost
