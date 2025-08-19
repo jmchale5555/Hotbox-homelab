@@ -74,7 +74,6 @@ spec:
         livenessProbe:
           exec:
             command:
-            - mysqladmin
             - ping
             - -h
             - localhost
