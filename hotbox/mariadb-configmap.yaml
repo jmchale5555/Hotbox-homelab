@@ -5,7 +5,7 @@ metadata:
   namespace: hotdesk
 data:
   MYSQL_DATABASE: "hot"
-  MYSQL_USER: "root"
+  MYSQL_USER: "hotdesk_user"
   init-db.sql: |
     -- Create database
     CREATE DATABASE IF NOT EXISTS hot;
