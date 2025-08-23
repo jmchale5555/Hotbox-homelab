@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: hotdesk
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      # Init container to copy files to shared volume
+      initContainers:
+      - name: copy-files
+        image: localhost:5000/project-php-fpm:latest
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "Copying application files..."
+          cp -r /var/www/html/* /shared-files/
+          chown -R www-data:www-data /shared-files/
+          echo "Files copied successfully"
+        volumeMounts:
+        - name: shared-files
+          mountPath: /shared-files
+      containers:
+      # Nginx container
+      - name: nginx
+        image: localhost:5000/project-nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+        - name: shared-files
+          mountPath: /var/www/html
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      # PHP-FPM container
+      - name: php-fpm
+        image: localhost:5000/project-php-fpm:latest
+        ports:
+        - containerPort: 9000
+        volumeMounts:
+        - name: shared-files
+          mountPath: /var/www/html
+        readinessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: shared-files
+        emptyDir: {}
