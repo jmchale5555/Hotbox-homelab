@@ -58,7 +58,7 @@ data:
         # PHP-FPM handling
         location ~ \.php$ {
             include fastcgi_params;
-            fastcgi_pass php-fpm:9000;
+            fastcgi_pass localhost:9000;
             fastcgi_index index.php;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             
