@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  namespace: hotdesk
+  labels:
+    app: mariadb
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate  # Important for databases
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: 
+        - sh
+        - -c
+        - |
+          chown -R 999:999 /var/lib/mysql
+          chmod 755 /var/lib/mysql
+        volumeMounts:
+        - name: mariadb-storage
+          mountPath: /var/lib/mysql
+        securityContext:
+          runAsUser: 0
+      containers:
+      - name: mariadb
+        image: 192.168.1.211:5000/project-mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: mariadb-root-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mariadb-config
+              key: MYSQL_DATABASE
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mariadb-config
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: mariadb-password
+        - name: MYSQL_ROOT_HOST
+          value: "%"
+        volumeMounts:
+        - name: mariadb-storage
+          mountPath: /var/lib/mysql
+        - name: init-scripts
+          mountPath: /docker-entrypoint-initdb.d
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          exec:
+           command:
+            - /bin/bash
+            - -c
+            - 'mariadb-admin ping -h localhost -u root -p"$MYSQL_ROOT_PASSWORD"'
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 30
+          periodSeconds: 5
+      volumes:
+      - name: mariadb-storage
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+      - name: init-scripts
+        configMap:
+          name: mariadb-init-scripts
+          optional: true
