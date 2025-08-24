@@ -16,7 +16,7 @@ spec:
       # Init container to copy files to shared volume
       initContainers:
       - name: copy-files
-        image: localhost:5000/project-php-fpm:latest
+        image: 192.168.1.211:5000/project-php-fpm:latest
         command:
         - /bin/bash
         - -c
@@ -31,7 +31,7 @@ spec:
       containers:
       # Nginx container
       - name: nginx
-        image: localhost:5000/project-nginx:latest
+        image: 192.168.1.211:5000/project-nginx:latest
         ports:
         - containerPort: 80
         volumeMounts:
@@ -47,7 +47,7 @@ spec:
           periodSeconds: 5
       # PHP-FPM container
       - name: php-fpm
-        image: localhost:5000/project-php-fpm:latest
+        image: 192.168.1.211:5000/project-php-fpm:latest
         ports:
         - containerPort: 9000
         volumeMounts:
