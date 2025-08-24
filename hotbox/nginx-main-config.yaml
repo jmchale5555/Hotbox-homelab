@@ -79,3 +79,4 @@ data:
 
         # Include server configurations
         include /etc/nginx/conf.d/*.conf;
+    }
